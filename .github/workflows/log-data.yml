@@ -1,0 +1,26 @@
+name: Log User Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      userData:
+        description: 'User data received from the frontend'
+        required: true
+        type: string
+
+jobs:
+  log_user_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Save user data to file
+        run: |
+          echo "User data received: ${{ inputs.userData }}" >> logs/user_logs.txt
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add logs/user_logs.txt
+          git commit -m "Log user data"
+          git push
