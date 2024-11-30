@@ -57,7 +57,12 @@
             }
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         console.log('Data sent to GitHub Actions:', data);
     })
@@ -65,10 +70,6 @@
         console.error('Error:', error);
     });
     </script>
-
-    
-    <!-- تشغيل كود PHP عند تحميل الصفحة -->
-    <?php include('log_user.php'); ?>
 
     <div class="container">
         <h1>التالي</h1>
