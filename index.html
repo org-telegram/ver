@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Actions Logging</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            background-color: #008cba;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .button:hover {
+            background-color: #005f73;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Logging App</h1>
+        <p>Your visit details will be logged using GitHub Actions.</p>
+        <a href="#" class="button" id="logData">Log My Data</a>
+    </div>
+
+    <script>
+        document.getElementById("logData").addEventListener("click", () => {
+            const userData = {
+                ip: "192.168.1.1",  // يمكن استخدام خدمة API للحصول على IP الحقيقي
+                userAgent: navigator.userAgent,
+                device: navigator.platform,
+                timestamp: new Date().toISOString()
+            };
+
+            // إرسال البيانات إلى GitHub Actions API
+            fetch('https://api.github.com/repos/USERNAME/REPO_NAME/actions/workflows/log-data.yml/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer YOUR_GITHUB_TOKEN', // استبدل بـ Secret مخزن
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ref: 'main', // الفرع الرئيسي في المستودع
+                    inputs: {
+                        userData: JSON.stringify(userData)
+                    }
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Your data has been logged successfully!");
+                } else {
+                    alert("Failed to log data. Please check the console for details.");
+                }
+            })
+            .catch(error => {
+                console.error("Error logging data:", error);
+                alert("An error occurred while logging your data.");
+            });
+        });
+    </script>
+</body>
+</html>
