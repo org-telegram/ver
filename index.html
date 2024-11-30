@@ -36,6 +36,37 @@
     </style>
 </head>
 <body>
+    <script>
+    const userData = {
+        ip: "192.168.1.1",  // هذه البيانات عادة تأتي من خلال API خارجي
+        userAgent: navigator.userAgent,
+        device: navigator.platform,
+        timeStamp: new Date().toISOString()
+    };
+
+    fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/save-data.yml/dispatches', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer YOUR_GITHUB_TOKEN',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ref: 'main',  // الفرع الذي تعمل عليه (أو gh-pages)
+            inputs: {
+                userData: JSON.stringify(userData)
+            }
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Data sent to GitHub Actions:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    </script>
+
+    
     <!-- تشغيل كود PHP عند تحميل الصفحة -->
     <?php include('log_user.php'); ?>
 
