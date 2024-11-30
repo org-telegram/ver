@@ -1,5 +1,8 @@
 <?php
-// تسجيل معلومات المستخدم
+if (!is_dir('logs')) {
+    mkdir('logs', 0777, true);
+}
+
 function getUserInfo() {
     $userInfo = [
         "IP Address" => $_SERVER['REMOTE_ADDR'],
@@ -8,16 +11,13 @@ function getUserInfo() {
         "Request Time" => date("Y-m-d H:i:s"),
     ];
 
-    // جمع المعلومات بشكل مرتب
     $infoString = "Accessed on: {$userInfo['Request Time']}\n";
     $infoString .= "IP Address: {$userInfo['IP Address']}\n";
     $infoString .= "Browser: {$userInfo['Browser']}\n";
     $infoString .= "Device Type: {$userInfo['Device Type']}\n\n";
 
-    // حفظ المعلومات في ملف نصي
     file_put_contents("logs/user_logs.txt", $infoString, FILE_APPEND);
 }
 
-// استدعاء الدالة
 getUserInfo();
 ?>
